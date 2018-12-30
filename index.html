@@ -9,100 +9,8 @@
     <script src="aframe-entity-generator-component.min.js"></script>
     <script src="aframe-environment-component.min.js"></script>
     <script src="aframe-text-geometry-component.min.js"></script>
-<!--    <script src="aframe-particle-system-component.min.js"></script> -->
-
-    <script>
-      AFRAME.registerComponent("click-listener", {
-      init: function() {
-        this.el.addEventListener("click", (e) => {
-          console.log(e.target);
-          e.target.setAttribute('random-sound', '');
-          console.log('random-sound');
-          console.log(e.target);
-          });
-        }
-      })
-    </script>
-
-    <script>
-      AFRAME.registerComponent('random-sound', {
-        init: function () {
-          this.el.setAttribute('sound', {
-            src: this.getRandomSound(),
-            autoplay: true,
-            loop: true,
-            rolloffFactor: 10,
-            poolSize: 5
-          });
-        },
-        getRandomSound: function () {
-          var sounds = ['beach', 'birds', 'drops', 'fire', 'forest',
-              'leaves', 'rain', 'river', 'windnchimes'];
-          sound = '#' + sounds[Math.floor(Math.random() * sounds.length)];
-          return sound;
-        }
-      });
-
-      AFRAME.registerComponent('random-material', {
-        init: function () {
-          this.el.setAttribute('material', {
-            color: this.getRandomColor(),
-            metalness: Math.random(),
-            roughness: Math.random()
-          });
-        },
-        getRandomColor: function () {
-          var letters = '0123456789ABCDEF'.split('');
-          var color = '#';
-          for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-          }
-          return color;
-        }
-      });
-
-      AFRAME.registerComponent('random-sphere', {
-        init: function () {
-          this.el.setAttribute('geometry', {
-            primitive: 'sphere',
-            radius: 1 + Math.random() * 4
-          });
-        }
-      });
-
-      AFRAME.registerComponent('random-box', {
-        init: function () {
-          this.el.setAttribute('geometry', {
-            primitive: 'box',
-            depth: 2 + Math.random() * 3,
-            height: 2 + Math.random() * 3,
-            width: 2 + Math.random() * 3
-          });
-        }
-      });
-
-      AFRAME.registerComponent('random-tree', {
-        trees: [
-          ['tree', '.01 .01 .01'],
-          ['pine-tree', '0.5 0.5 0.5'],
-          ['palm-tree', '0.3 0.3 0.3'],
-          ['elm-tree', '0.3 0.3 0.3'],
-          ['apple-tree', '0.3 0.3 0.3'],
-          ['bubinga-tree', '0.3 0.3 0.3']
-        ],
-        init: function () {
-          var tree = this.getRandomTree()
-          this.el.setAttribute('gltf-model', '#' + tree[0]);
-          this.el.setAttribute('scale', tree[1]);
-        },
-        getRandomTree: function () {
-          tree = this.trees[Math.floor(Math.random() * this.trees.length)];
-          console.log(tree)
-          return tree;
-        }
-      });
-
-    </script>
+    <script src="aframe-particle-system-component.min.js"></script>
+    <script src="custom.js"></script>
   </head>
   <body>
     <a-scene renderer="antialias: true;
@@ -153,7 +61,7 @@
 
       <a-entity entity-generator="mixin: asphere; num: 6"></a-entity>
       <a-entity entity-generator="mixin: abox; num: 2"></a-entity>
-      <a-entity entity-generator="mixin: atree; num: 40"></a-entity>
+      <a-entity entity-generator="mixin: atree; num: 10"></a-entity>
 
       <a-entity text-geometry="height: 4; size: 20; value: BdC"
                 position="-8 20 -50"
@@ -164,19 +72,29 @@
                 rotation="0 180 0"
                 material="color: red"></a-entity>
 
+      <a-entity text-geometry="height: .2; size: 2; value: Feliz 2019"
+                position="-6 0.2 -4"
+                rotation="-70 0 0"
+                material="color: brown"></a-entity>
+
       <!-- Lights. -->
-      <a-entity animation="property: rotation; to: 0 0 360; dur: 32000; easing: linear; loop: true">
+      <a-entity animation="property: rotation; to: 0 0 360; dur: 32000;
+                           easing: linear; loop: true">
         <a-entity mixin="light" position="30 0 0"></a-entity>
       </a-entity>
 
-      <a-entity animation="property: rotation; to: 360 0 0; dur: 32000; easing: linear; loop: true">
+      <a-entity animation="property: rotation; to: 360 0 0; dur: 32000;
+                           easing: linear; loop: true">
         <a-entity mixin="light" position="0 0 40"></a-entity>
       </a-entity>
-<!--      <a-entity position="0 2.25 -15" particle-system="preset: fire"></a-entity> -->
 
-<!--      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="200" color="#7BC8A4" shadow></a-plane>
--->
-      <a-entity environment="preset: forest; lighting: distant;"></a-entity>
+      <a-entity position="0 5 -2" particle-system="preset: snow; particleCount: 4000"></a-entity>
+
+      <a-entity environment="preset: forest; lighting: distant;
+                             groundColor: white; groundColor2: grey;
+                             dressingColor: darkgreen; fog: 0.85;
+                             skyColor: white; horizonColor: grey;
+                             groundTexture: walkernoise"></a-entity>
 
       <a-entity movement-controls position="0 0 0">
         <a-entity camera position="0 1.6 0" look-controls wasd-controls></a-entity>
