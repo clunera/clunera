@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>El parque de C</title>
     <meta name="description" content="Dynamic Lights - A-Frame">
     <script src="aframe-master.min.js"></script>
@@ -10,6 +11,7 @@
     <script src="aframe-environment-component.min.js"></script>
     <script src="aframe-text-geometry-component.min.js"></script>
     <script src="aframe-particle-system-component.min.js"></script>
+<!--    <script src="aframe-htmlembed-component.min.js"></script> -->
     <script src="custom.js"></script>
   </head>
   <body>
@@ -18,22 +20,27 @@
              cursor="rayOrigin:mouse" background="color: #DDD">
 
       <a-assets>
-        <audio id="beach" src="beach.mp3" preload="auto"></audio>
-        <audio id="birds" src="birds.mp3" preload="auto"></audio>
-        <audio id="drops" src="drops.mp3" preload="auto"></audio>
+<!--        <audio id="beach" src="beach.mp3" preload="auto"></audio>
         <audio id="fire" src="fire.mp3" preload="auto"></audio>
         <audio id="forest" src="forest.mp3" preload="auto"></audio>
         <audio id="leaves" src="leaves.mp3" preload="auto"></audio>
         <audio id="rain" src="rain.mp3" preload="auto"></audio>
         <audio id="river" src="river.mp3" preload="auto"></audio>
-        <audio id="windchimes" src="windchimes.mp3" preload="auto"></audio>
-
+        <audio id="drops" src="drops.mp3" preload="auto"></audio>
+        <audio id="fountain-sound" src="fountain.mp3" preload="auto"></audio>
+        <audio id="birds" src="birds.mp3" preload="auto"></audio> -->
+        <a-asset-item id="drops" src="drops.mp3" response-type="arraybuffer" preload="auto"></a-asset-item>
+        <a-asset-item id="fountain-sound" src="fountain.mp3" response-type="arraybuffer" preload="auto"></a-asset-item>
+        <a-asset-item id="birds" src="birds.mp3" response-type="arraybuffer" preload="auto"></a-asset-item>
+<!--        <audio id="windchimes" src="windchimes.mp3" preload="auto"></audio>
+-->
         <a-asset-item id="tree" src="objects/tree/tree01.gltf"></a-asset-item>
         <a-asset-item id="pine-tree" src="objects/pine-tree/PineTree.gltf"></a-asset-item>
         <a-asset-item id="palm-tree" src="objects/palm-tree/AlexandraPalmTree.gltf"></a-asset-item>
         <a-asset-item id="elm-tree" src="objects/elm-tree/ElmTree.gltf"></a-asset-item>
         <a-asset-item id="apple-tree" src="objects/apple-tree/AppleTree.gltf"></a-asset-item>
         <a-asset-item id="bubinga-tree" src="objects/bubinga-tree/BubingaTree.gltf"></a-asset-item>
+        <a-asset-item id="fountain" src="objects/fountain/SM_Fountain_02.gltf"></a-asset-item>
 
         <a-mixin id="light"
                  geometry="primitive: sphere; radius: 1.5"
@@ -55,50 +62,65 @@
 
         <a-mixin id="atree"
                  random-tree
-                 random-position="min: -30 0 -40; max: 30 0 20"></a-mixin>
+                 random-position="min: -30 0 -40; max: 30 0 -10"></a-mixin>
+
+        <a-mixin id="atree2"
+                 random-tree
+                 random-position="min: -30 0 5; max: 30 0 40"></a-mixin>
 
       </a-assets>
 
-      <a-entity entity-generator="mixin: asphere; num: 6"></a-entity>
-      <a-entity entity-generator="mixin: abox; num: 2"></a-entity>
+<!--      <a-entity entity-generator="mixin: asphere; num: 6"></a-entity>
+      <a-entity entity-generator="mixin: abox; num: 2"></a-entity> -->
       <a-entity entity-generator="mixin: atree; num: 10"></a-entity>
+      <a-entity entity-generator="mixin: atree2; num: 10"></a-entity>
 
       <a-entity text-geometry="height: 4; size: 20; value: BdC"
-                position="-8 20 -50"
+                position="-10 20 -50"
                 material="color: red"></a-entity>
 
       <a-entity text-geometry="height: 4; size: 20; value: HaC"
-                position="8 20 50"
+                position="10 20 50"
                 rotation="0 180 0"
                 material="color: red"></a-entity>
 
-      <a-entity text-geometry="height: .2; size: 2; value: Feliz 2019"
-                position="-6 0.2 -4"
-                rotation="-70 0 0"
+      <a-entity text-geometry="height: .2; size: 2; value: Feliz cumple"
+                position="-8 3 -8"
+                rotation="-20 0 0"
                 material="color: brown"></a-entity>
 
+      <a-entity position="0 0 -15"
+                sound="src: #birds; autoplay: true; distanceModel: linear;
+                       loop: true;"></a-entity>
+      <a-entity gltf-model="#fountain" position="-10 0 -6"
+                sound="src: #drops; autoplay: true; distanceModel: linear;
+                       loop: true;"></a-entity>
+      <a-entity gltf-model="#fountain" position="10 0 -6"
+                sound="src: #fountain-sound; autoplay: true; distanceModel: linear;
+                       loop: true;"></a-entity>
+
       <!-- Lights. -->
-      <a-entity animation="property: rotation; to: 0 0 360; dur: 32000;
+<!--      <a-entity animation="property: rotation; to: 0 0 360; dur: 32000;
                            easing: linear; loop: true">
         <a-entity mixin="light" position="30 0 0"></a-entity>
       </a-entity>
-
-      <a-entity animation="property: rotation; to: 360 0 0; dur: 32000;
+-->
+      <a-entity animation="property: rotation; to: 360 0 0; dur: 64000;
                            easing: linear; loop: true">
-        <a-entity mixin="light" position="0 0 40"></a-entity>
+        <a-entity mixin="light" position="0 0 -70"></a-entity>
       </a-entity>
 
-      <a-entity position="0 5 -2" particle-system="preset: snow; particleCount: 4000"></a-entity>
-
+<!--      <a-entity position="0 5 -2" particle-system="preset: snow; particleCount: 4000"></a-entity>
+-->
       <a-entity environment="preset: forest; lighting: distant;
-                             groundColor: white; groundColor2: grey;
+                             groundColor: green; groundColor2: grey;
                              dressingColor: darkgreen; fog: 0.85;
-                             skyColor: white; horizonColor: grey;
+                             skyColor: brown; horizonColor: grey;
                              groundTexture: walkernoise"></a-entity>
 
-      <a-entity movement-controls position="0 0 0">
+      <a-entity movement-controls position="0 0 4">
         <a-entity camera position="0 1.6 0" look-controls wasd-controls></a-entity>
-        <a-entity laser-controls="hand: right"></a-entity>
+<!--        <a-entity laser-controls="hand: right"></a-entity> -->
         <a-entity oculus-go-controls></a-entity>
       </a-entity>
 
